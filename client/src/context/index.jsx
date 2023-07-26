@@ -12,7 +12,7 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    '0xe0dc66395d195a81b64987Fa8bA12B1E3f3d0012'
+    "0x591FA8237fF9D8187a8AB2248df35572FC2BD56b"
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
@@ -22,36 +22,36 @@ export const StateContextProvider = ({ children }) => {
   const address = useAddress();
   const connect = useMetamask();
 
-  const publishCampaign = async(form) => {
-    try{
-        const data = await createCampaign([
-            address, // owner
-            form.title, // title
-            form.description, // description
-            form.target, // target amount
-            new Date(form.deadline).getTime(), // deadline
-            form.image
-        ])
-
-        console.log("contract call sucess", data);
-    }
-    catch(error){
-        console.log("contract call failure", error);
+  const publishCampaign = async (form) => {
+    try {
+      const data = await createCampaign({
+        args: [
+          address, //owner
+          form.title, // title
+          form.description,  // description
+          form.target, // target amount
+          new Date(form.deadline).getTime(), // deadline
+          form.image, // image
+        ],
+      });
+      console.log("contract call success ", data);
+    } catch (error) {
+      console.log("contract call failed ", error);
     }
   }
 
-  return(
+  return (
     <StateContext.Provider
-        value={{
-            address,
-            contract,
-            connect,
-            createCampaign: publishCampaign,
-        }}
+      value={{
+        address,
+        contract,
+        connect,
+        createCampaign: publishCampaign,
+      }}
     >
-        {children}
+      {children}
     </StateContext.Provider>
-  )
+  );
 };
 
 export const useStateContext = () => useContext(StateContext);
