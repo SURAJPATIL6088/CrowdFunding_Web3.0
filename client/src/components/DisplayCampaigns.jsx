@@ -19,11 +19,16 @@ const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
         {isLoading && (
+          <div className="flex flex-col justify-center items-center">
           <img
             src={loader}
             alt="loader"
-            className="w-[100px] h-[100px] object-contain"
+            className="w-[100px] h-[100px] object-contain "
           />
+          <p className="mt-[20px] font-epilogue font-bold text-[20px] text-white text-center">
+          Wait a white Campaigns Loading <br /> Please wait...
+          </p>
+          </div>
         )}
 
         {!isLoading && campaigns.length === 0 && (
