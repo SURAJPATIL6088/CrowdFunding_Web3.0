@@ -7,3 +7,9 @@ Home Page :
 
 Create Campaign : 
 ![image](https://github.com/SURAJPATIL6088/CrowdFunding_Web3.0/assets/78692972/e09abf47-299d-4370-a3cf-3fe6d53713f9)
+
+### Future Updates 
+  1. Search the Campaign.
+  2. Switch Light/Dark Theme.
+  3. Payment Option
+  4. Logout Session
