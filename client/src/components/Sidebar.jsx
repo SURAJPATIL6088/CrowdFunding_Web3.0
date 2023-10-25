@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import { logo, sun } from "../assets";
+import { logo, sun, logout } from "../assets";
 import { navlinks } from "../constants";
+import { useDisconnect } from "@thirdweb-dev/react";
+
 
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   <div
@@ -29,6 +30,10 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
   const [count, setCount] = useState(0);
+
+  // function to dissconnect from metamask
+  const disconnect = useDisconnect();
+
 
   function handleClick() {
     if (localStorage.theme === "dark" || !("theme" in localStorage)) {
@@ -68,6 +73,7 @@ const Sidebar = () => {
               }}
             />
           ))}
+          <Icon onClick={disconnect} styles="bg-[#1c1c24] shadow-secondary" imgUrl={logout}/>
         </div>
 
         <Icon onClick={handleClick} styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun}/>
