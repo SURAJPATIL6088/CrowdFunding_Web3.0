@@ -28,6 +28,24 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    if (localStorage.theme === "dark" || !("theme" in localStorage)) {
+      //add class=dark in html element
+      document.documentElement.classList.add("dark");
+    } else {
+      //remove class=dark in html element
+      document.documentElement.classList.remove("dark");
+    }
+
+    if (localStorage.theme === "light") {
+      localStorage.theme = "dark";
+    } else {
+      localStorage.theme = "light";
+    }
+  }
+
 
   return (
     <div className="flex justify-between items-center flex-col sticky top-5 h-[93vh]">
@@ -52,7 +70,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun}/>
+        <Icon onClick={handleClick} styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun}/>
       </div>
     </div>
   );
