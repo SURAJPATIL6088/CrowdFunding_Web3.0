@@ -17,7 +17,7 @@ const CampaignDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
-
+  const [ENSName, setENSName] = useState(null);
   const remainingDays = daysLeft(state.deadline);
 
   const fetchDonators = async () => {
@@ -26,6 +26,33 @@ const CampaignDetails = () => {
     console.log(data);
     setDonators(data);
   };
+
+  async function getENSUrl(addrs) {
+    const apiUrl = `https://ensdata.net/${addrs}`;
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data.avatar;
+  }
+
+  async function getENSName(addrs) {
+    const apiUrl = `https://ensdata.net/${addrs}`;
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data.name;
+  }
+
+  // check first ens deatils are exits or not
+  useEffect(() => {
+    if (address) {
+      async function fetchENSName() {
+        const fetchedENSName = await getENSName(address);
+        setENSName(fetchedENSName);
+      }
+      fetchENSName();
+    }
+  }, [address]);
+
+
 
   // call the fetch donators when the contract is available
   useEffect(() => {
