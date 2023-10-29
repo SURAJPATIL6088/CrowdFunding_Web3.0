@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import { logo, sun } from "../assets";
+import { logo, sun, logout } from "../assets";
 import { navlinks } from "../constants";
+import { useDisconnect } from "@thirdweb-dev/react";
+
 
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   <div
@@ -28,6 +29,28 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
+  const [count, setCount] = useState(0);
+
+  // function to dissconnect from metamask
+  const disconnect = useDisconnect();
+
+
+  function handleClick() {
+    if (localStorage.theme === "dark" || !("theme" in localStorage)) {
+      //add class=dark in html element
+      document.documentElement.classList.add("dark");
+    } else {
+      //remove class=dark in html element
+      document.documentElement.classList.remove("dark");
+    }
+
+    if (localStorage.theme === "light") {
+      localStorage.theme = "dark";
+    } else {
+      localStorage.theme = "light";
+    }
+  }
+
 
   return (
     <div className="flex justify-between items-center flex-col sticky top-5 h-[93vh]">
@@ -50,9 +73,10 @@ const Sidebar = () => {
               }}
             />
           ))}
+          <Icon onClick={disconnect} styles="bg-[#1c1c24] shadow-secondary" imgUrl={logout}/>
         </div>
 
-        <Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun}/>
+        <Icon onClick={handleClick} styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun}/>
       </div>
     </div>
   );
