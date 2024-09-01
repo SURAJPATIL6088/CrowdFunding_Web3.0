@@ -2,8 +2,6 @@ import React, { useContext, createContext } from "react";
 
 import {
   useAddress,
-  useContract,
-  useMetamask,
   useContractWrite,
   useLogout,
 } from "@thirdweb-dev/react";
@@ -12,16 +10,8 @@ import { ethers } from "ethers";
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract } = useContract(
-    "0x591FA8237fF9D8187a8AB2248df35572FC2BD56b"
-  );
-  const { mutateAsync: createCampaign } = useContractWrite(
-    contract,
-    "createCampaign"
-  );
 
   const address = useAddress();
-  const connect = useMetamask();
   const logout = useLogout();
 
   const publishCampaign = async (form) => {
